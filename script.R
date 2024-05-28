@@ -1,15 +1,13 @@
 rm(list = ls())
-setwd("/home/onyxia/formation-bonnes-pratiques-R")
 
 if (!require('ggplot2')) install.packages('ggplot2')
 if (!require('stringr')) install.packages('stringr')
 if (!require('dplyr')) install.packages('dplyr')
 if (!require('tidyverse')) install.packages('tidyverse')
 
-
 library(tidyverse)
+library(MASS)
 
-# j'importe les données avec read_csv2 parce que c'est un csv avec des ; et que read_csv attend comme separateur des , 
 df <- readr::read_csv2(
   "individu_reg.csv",
   col_select = c("region", "aemm", "aged", "anai","catl","cs1", "cs2", "cs3", "couple", "na38", "naf08", "pnai12", "sexe", "surf", "tp", "trans", "ur"))
@@ -72,7 +70,7 @@ api_token <- "trotskitueleski$1917"
 
 # modelisation
 # library(MASS)
-df3=df%>%select(surf,cs1,ur,couple,aged)%>%filter(surf!="Z")
+df3=df%>%dplyr::select(surf,cs1,ur,couple,aged)%>%filter(surf!="Z")
 df3[,1]=factor(df3$surf, ordered = T)
 df3[,"cs1"]=factor(df3$cs1)
 df3 %>% 
