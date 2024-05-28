@@ -1,16 +1,18 @@
 rm(list = ls())
 
-if (!require('ggplot2')) install.packages('ggplot2')
-if (!require('stringr')) install.packages('stringr')
-if (!require('dplyr')) install.packages('dplyr')
-if (!require('tidyverse')) install.packages('tidyverse')
+if (!require("ggplot2")) install.packages("ggplot2")
+if (!require("stringr")) install.packages("stringr")
+if (!require("dplyr")) install.packages("dplyr")
+if (!require("tidyverse")) install.packages("tidyverse")
 
 library(tidyverse)
 library(MASS)
+library(lintr)
 
-df <- readr::read_csv2(
-  "individu_reg.csv",
-  col_select = c("region", "aemm", "aged", "anai","catl","cs1", "cs2", "cs3", "couple", "na38", "naf08", "pnai12", "sexe", "surf", "tp", "trans", "ur"))
+df <- readr::read_csv2( "individu_reg.csv", col_select = c("region", "aemm",
+   "aged", "anai","catl","cs1", "cs2", "cs3", "couple", "na38", "naf08",
+                  "pnai12", "sexe", "surf", "tp", "trans", "ur"))
+                 
 
 df <- df %>%
   mutate(aged = as.numeric(aged))
@@ -76,3 +78,5 @@ df3[,"cs1"]=factor(df3$cs1)
 df3 %>% 
   filter(couple == "2" & aged>40 & aged<60)
 polr(surf ~ cs1 + factor(ur), df3)
+
+lintr::lint("script.R")
